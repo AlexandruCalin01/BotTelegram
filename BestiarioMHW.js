@@ -84,10 +84,6 @@ bot.command("monster", (ctx) => {
 
     for (let i = 0; i < mostri.monsters.length; i++) {
         if (mostri.monsters[i].Name == message) {
-            // bot.telegram.sendPhoto(ctx.chat.id, mostri.monsters[i].Picture);
-            // ctx.reply("Description: " + mostri.monsters[i].Description +
-            //     "\n \n" + "Weak element: " + mostri.monsters[i].WeakElement +
-            //     "\n \n" + "Weak stauts: " + mostri.monsters[i].WeakStatus);
             ctx.replyWithPhoto({ url: mostri.monsters[i].Picture }, {
                 caption: mostri.monsters[i].Description +
                     "\n \n" + "Weak element: " + mostri.monsters[i].WeakElement +
@@ -96,15 +92,5 @@ bot.command("monster", (ctx) => {
         }
     }
 });
-
-// bot.command('Diablos', (ctx) => {
-//     var j=0;
-//     var bestia = mostri.monsters[j]
-//     for (j ; j < mostri.monsters.length; j++) {
-//         if (mostri.monsters[j].Name == "Diablos")
-//             break;
-//     }
-//     ctx.reply(mostri.monsters[j].Name);
-// });
 
 bot.launch();
