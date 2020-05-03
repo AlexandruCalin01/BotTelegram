@@ -18,10 +18,10 @@ let mostri = {
 
 //Comando per solo admin, se non si è admin riotnr una stringa che dice che non sei admin, preso il mio Id tramite un bot 
 bot.command('admin', acl((ctx) => {
-    if (adminIds == ctx.message.chat.id)
-        ctx.reply("Sono l'admin")
+    if (adminIds == ctx.message.chat.id) //Controlla se adminIds corrisponde all'id dell'utente in chat
+        ctx.reply("You are the admin, welcome sir")
     else
-        ctx.reply("Non sei l'admin, Shame on you")
+        ctx.reply("You are not the admin, Shame on you")
 }));
 
 //Parte quando si fa /start, invia un messaggio di benvenuto
@@ -41,7 +41,7 @@ bot.help((ctx) => {
 bot.command('elements', (ctx) => {
     ctx.reply("The elemental blights included in this world are: ");
     for (let i = 0; i < elementi.length; i++) //Uso let così da non creare una variabile globale
-        ctx.reply(elementi[i]);
+        ctx.reply(elementi[i]); //Con il for vado a creare un let i inizializzato a 0 che continua ad incrementarsi di 1 per la lunghezza dell'array elementi, per ogni ciclo stampa elementi[i]
 });
 
 //Parte quando si fa /statuses, invia una lista degli effetti di stati presenti in gioco
@@ -61,30 +61,30 @@ bot.command('locations', (ctx) => {
 //Parte quando si fa /monsters, invia una lista con i nomi dei mostri presenti nel JSON
 bot.command('monsters', (ctx) => {
     ctx.reply("The monsters that we have note of are: \n");
-    for (let i = 0; i < mostri.monsters.length; i++)
+    for (let i = 0; i < mostri.monsters.length; i++) //Come gli altri comandi, ma questa volta vado a prendere i dati da un var json che ho chiamato mostri, dove è prensente l'array monsters in cui prendo solo il nome
         ctx.reply(mostri.monsters[i].Name);
 });
 
 //Parte quando si fa /randompicture, invia una foto il cui link è nel JSON
 bot.command('randompicture', (ctx) => {
-    var r = Math.floor(Math.random() * mostri.monsters.length);
-    bot.telegram.sendPhoto(ctx.chat.id, mostri.monsters[r].Picture);
+    var r = Math.floor(Math.random() * mostri.monsters.length); //Genero un numero random tra 0 e la lunghezza di monsters associandolo a r
+    bot.telegram.sendPhoto(ctx.chat.id, mostri.monsters[r].Picture); //Invio una foto presente nel json all'elemento monsters[r]
 });
 
 //Parte quando si fa /monster [NomeMostro], invia i dati del mostro selezionato
 bot.command("monster", (ctx) => {
-    let input = ctx.message.text;
-    let inputArray = input.split(" ");
+    let input = ctx.message.text; //Il messaggio scritto dall'utente viene preso e messo nella var input
+    let inputArray = input.split(" "); //Divido il /monster dal nome del mostro creando un array di 2 elementi
     let message = "";
 
     if (inputArray.length != 1) {
-        inputArray.shift();
-        message = inputArray.join(" ");
+        inputArray.shift(); //Rimuove il primo elemento dell'array, ovvero /monster
+        message = inputArray.join(" "); //Rende l'array una stringa
     }
 
     for (let i = 0; i < mostri.monsters.length; i++) {
-        if (mostri.monsters[i].Name == message) {
-            ctx.replyWithPhoto({ url: mostri.monsters[i].Picture }, {
+        if (mostri.monsters[i].Name == message) { //Controlla se esiste il mostro nel json
+            ctx.replyWithPhoto({ url: mostri.monsters[i].Picture }, { //Risponde con un messaggio unico contenente foto, descrizione, elemento e status debole
                 caption: mostri.monsters[i].Description +
                     "\n \n" + "Weak element: " + mostri.monsters[i].WeakElement +
                     "\n \n" + "Weak stauts: " + mostri.monsters[i].WeakStatus
