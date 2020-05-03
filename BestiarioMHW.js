@@ -107,6 +107,4 @@ bot.command("monster", (ctx) => {
 //     ctx.reply(mostri.monsters[j].Name);
 // });
 
-//pene
-
 bot.launch();
